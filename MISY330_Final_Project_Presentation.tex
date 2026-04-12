@@ -1,0 +1,385 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Clean, professional Beamer setup
+\usetheme{Madrid}
+\usecolortheme{dolphin}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{structure.fg}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{structure.fg}$\bullet$}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+
+\title[Trade and Portfolio Analysis]{Trade and Portfolio Analysis Database System}
+\subtitle{Database Design, Implementation, and Trade Analytics}
+\author[Group 173 Yanggao]{Group 173 Yanggao\\Yingqi Tan \and Zhesheng Xu \and Hao Yang}
+\institute[MISY330 Spring 2026]{MISY330 Database Design and Implementation\\Spring 2026}
+\date{}
+
+\newcommand{\queryimage}[1]{%
+    \centering
+    \includegraphics[width=\linewidth,height=0.36\textheight,keepaspectratio]{#1}
+}
+
+\newcommand{\largequeryimage}[1]{%
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.08\textwidth,height=0.47\textheight,keepaspectratio]{#1}}
+}
+
+\newcommand{\mediumwidequeryimage}[1]{%
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=0.92\textwidth,height=0.16\textheight,keepaspectratio]{#1}}
+}
+
+\newcommand{\widequeryimage}[1]{%
+    \centering
+    \makebox[\textwidth][c]{\includegraphics[width=1.08\textwidth,height=0.24\textheight,keepaspectratio]{#1}}
+}
+
+\newcommand{\prototypeimage}[1]{%
+    \centering
+    \includegraphics[width=\linewidth,height=0.64\textheight,keepaspectratio]{#1}
+}
+
+\newcommand{\algobox}[1]{%
+    \begin{beamercolorbox}[rounded=true,sep=0.45em,wd=\linewidth]{block body}
+    \textbf{Algorithm:} {\ttfamily\tiny #1}
+    \end{beamercolorbox}
+}
+
+\begin{document}
+
+% ------------------------------------------------
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Business Overview}
+\begin{itemize}
+    \item This project models a trade and portfolio analysis business that tracks stocks, exchanges, market data, strategies, factors, and trading records.
+    \item A database is needed because trade analysis depends on structured relationships across companies, exchanges, portfolios, tax rules, and transaction history.
+    \item The system supports practical tasks such as tax calculation, FIFO cost matching, factor-based stock screening, realized profit monitoring, and cross-market comparison.
+    \item Business benefits include consistent record keeping, reusable query logic, faster reporting, and better decision support for portfolio management.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Database Scope and Main Entities}
+\small
+\begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+    \begin{itemize}
+        \item The database covers the full workflow from reference data to trade reporting.
+        \item \texttt{Company}, \texttt{Exchange}, and \texttt{Stock} define the market structure.
+        \item \texttt{MarketData} stores daily valuation and indicator information.
+        \item \texttt{Portfolio} and \texttt{TradeRecord} capture holdings and executed transactions.
+    \end{itemize}
+    \column{0.52\textwidth}
+    \begin{itemize}
+        \item \texttt{Strategy} stores investment approaches used for trades.
+        \item \texttt{Factor} stores screening dimensions such as PE ratio, dividend yield, RSI, and MACD.
+        \item \texttt{FactorUsageRule} links factors to strategies through buy/sell rules.
+        \item Together, these tables support tax analysis, FIFO matching, stock screening, and realized P\&L reporting.
+    \end{itemize}
+\end{columns}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{How the System Works}
+\small
+\begin{itemize}
+    \item The database is built in layers so each part of the business process has a clear role.
+    \item \textbf{Reference layer:} \texttt{Company} stores issuer fundamentals, \texttt{Exchange} stores market rules and tax rates, and \texttt{Stock} connects each tradable ticker to its company and exchange.
+    \item \textbf{Market layer:} \texttt{MarketData} stores date-based observations such as close price, EPS, dividend, RSI, and MACD for later valuation and factor analysis.
+    \item \textbf{Decision layer:} \texttt{Factor}, \texttt{Strategy}, and \texttt{FactorUsageRule} model how screening rules are translated into buy and sell signals.
+    \item \textbf{Transaction layer:} \texttt{Portfolio} identifies the investment account, and \texttt{TradeRecord} stores the executed trades with quantity, price, tax fields, selected strategy, and linked stock.
+    \item \textbf{Analysis layer:} SQL queries combine these tables to calculate taxes, apply FIFO logic, summarize realized P\&L, and screen securities for investment decisions.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{ER Diagram}
+\begin{columns}[T,onlytextwidth]
+    \column{0.38\textwidth}
+    \scriptsize
+    \begin{itemize}
+        \item The ER diagram shows 9 entities, which satisfies the requirement of at least 8 entities.
+        \item Primary keys identify each table, and foreign keys connect the business workflow from reference data to transactions.
+        \item Major relationships include Exchange--Stock, Company--Stock, Stock--MarketData, Portfolio--TradeRecord, and Strategy--FactorUsageRule.
+        \item \texttt{TradeRecord} is the central transaction table because each trade belongs to one portfolio, one strategy, and one stock.
+    \end{itemize}
+    \column{0.62\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.70\textheight,keepaspectratio]{ER Diagram.png}
+\end{columns}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Logical Data Model}
+\begin{columns}[T,onlytextwidth]
+    \column{0.38\textwidth}
+    \small
+    \begin{itemize}
+        \item The logical model translates the ER design into implementation-ready tables and relationship directions.
+        \item \texttt{FactorUsageRule} is the key associative table that resolves the many-to-many relationship between \texttt{Strategy} and \texttt{Factor}.
+        \item \texttt{MarketData} uses a composite key of date and stock code to store time-series market observations.
+        \item Optional tax fields in \texttt{TradeRecord} support later update queries for stamp duty and capital gain tax.
+    \end{itemize}
+    \column{0.62\textwidth}
+    \centering
+    \includegraphics[width=\linewidth,height=0.74\textheight,keepaspectratio]{Trade ER Model.png}
+\end{columns}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Database Implementation}
+\small
+\begin{columns}[T,onlytextwidth]
+    \column{0.55\textwidth}
+    \begin{itemize}
+        \item The schema was implemented in MySQL Workbench, and \texttt{GroupProject.sql} creates the database, tables, keys, and sample data.
+        \item Parent tables are created first, then dependent tables such as \texttt{Stock}, \texttt{MarketData}, \texttt{FactorUsageRule}, and \texttt{TradeRecord}.
+        \item The script loads sample records and keeps PK/FK links consistent so later tax, FIFO, and reporting queries can run directly on the same dataset.
+    \end{itemize}
+    \column{0.45\textwidth}
+    \algobox{Create database\\
+    Create parent tables and PK/FK rules\\
+    Insert lookup data\\
+    Load dependent tables\\
+    Run update and analysis queries}
+\end{columns}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 1: FIFO Cost Basis Check}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Idea:} match each sell trade to the earliest eligible buy in the same stock and portfolio.
+    \item \textbf{Meaning:} FIFO cost basis is required for realized profit and capital gain tax.
+    \item \textbf{Output:} NVDA sells match expected buy prices, while trade 20 has no prior buy match.
+\end{itemize}
+\algobox{Filter sell trades\\
+Find earlier buy trades in same portfolio and stock\\
+Return matched FIFO buy price for validation}
+\largequeryimage{query 1.png}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 2: Updated Tax Results by Exchange}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Idea:} update taxes by linking each trade to exchange-specific rules.
+    \item \textbf{Meaning:} profit reports are only reliable after the correct market tax logic is applied.
+    \item \textbf{Output:} HKEX shows stamp duty, while NVDA and COST show capital gain tax on profitable US sells.
+\end{itemize}
+\algobox{Join TradeRecord + Stock + Exchange\\
+Apply stamp duty rule by market and direction\\
+Apply capital gain tax when realized gain > 0}
+\largequeryimage{query 2.png}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 3: Total Realized P\&L by Portfolio and Currency}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Idea:} aggregate realized profit for sell trades after tax.
+    \item \textbf{Meaning:} management needs a quick portfolio-level performance summary by currency.
+    \item \textbf{Output:} \texttt{Main\_Aggressive} shows total realized P\&L of 2067.75 in USD.
+\end{itemize}
+\algobox{Use sell trades only\\
+Compute net realized profit after tax\\
+Group by portfolio and trade currency}
+\mediumwidequeryimage{query 3.png}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 4: Transaction-Level Realized Profit Detail}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Idea:} show realized profit for each sell trade inside one portfolio.
+    \item \textbf{Meaning:} managers need trade-level audit detail behind the summary report.
+    \item \textbf{Output:} the portfolio contains one NVDA gain, one AAPL loss, and one break-even NVDA exit.
+\end{itemize}
+\algobox{Select one portfolio\\
+Match sell price with FIFO buy price and taxes\\
+Return net realized profit by transaction}
+\widequeryimage{query 4.png}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 5: Negative-Growth Companies with PE Ratio}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Idea:} screen stocks whose companies have negative profit growth and compute PE ratio.
+    \item \textbf{Meaning:} this helps identify weak-growth firms and compare valuation across markets.
+    \item \textbf{Output:} the result includes Chagee, BYD, JPMorgan Chase, and China Mobile.
+\end{itemize}
+\algobox{Join Company + Stock + Exchange + MarketData\\
+Keep rows with negative profit growth\\
+Calculate PE ratio from close price and EPS}
+\widequeryimage{query 5.png}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 6: Portfolios with Repeated Sell Activity}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Idea:} find portfolios with at least two sell trades in the same currency.
+    \item \textbf{Meaning:} this identifies active accounts and summarizes tax-adjusted sale proceeds.
+    \item \textbf{Output:} three portfolio-currency groups qualify, including \texttt{Main\_Aggressive} in USD.
+\end{itemize}
+\algobox{Use sell trades only\\
+Group by portfolio and currency\\
+Keep groups with COUNT(*) >= 2}
+\widequeryimage{query 6.png}
+\end{frame}
+
+\begin{frame}{Technical Highlights}
+\begin{itemize}
+    \item Primary-key and foreign-key structure organizes the schema around clean links between portfolios, trades, stocks, exchanges, strategies, factors, and market data.
+    \item Multi-table joins support realistic business reporting instead of isolated table lookups.
+    \item Nested subqueries and a CTE with cumulative logic are used to model FIFO cost basis for sell transactions.
+    \item Query design is business-oriented: taxes are exchange specific, realized profit is portfolio specific, and screening logic uses both fundamentals and market metrics.
+    \item The overall logic moves from raw records to decision-ready outputs: base tables store data, update queries calculate tax fields, nested queries resolve FIFO matching, and summary queries transform those results into reports.
+    \item The project reflects real trade-analysis ideas such as stamp duty, capital gain tax, FIFO matching, valuation ratios, and realized profit measurement.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Bonus Prototype Demo}
+\begin{itemize}
+    \item We completed the bonus task by building a simple local Flask application connected to the MySQL trade database.
+    \item The implementation uses:
+    \begin{itemize}
+        \item Flask for routing and page rendering
+        \item PyMySQL for direct database access
+        \item HTML templates for dashboard, company browser, trade CRUD, reports, and connection settings
+        \item SQL queries that reuse the project tables instead of mock data
+    \end{itemize}
+    \item The prototype is local only, with no authentication and no deployment, which matches the project bonus description.
+    \item This extension shows that the database is not only well designed in SQL, but also usable in a small application workflow.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Prototype Implementation Logic}
+\small
+\begin{itemize}
+    \item The prototype follows the same logic as the database project and turns the schema into a small usable application.
+    \item Step 1: start the Flask app locally in PowerShell with \texttt{python app.py}.
+    \item Step 2: open the connection settings page and enter host, port, username, password, target schema, and SSL option.
+    \item Step 3: after the connection test succeeds, the app runs SQL against the actual MySQL database and displays live results.
+    \item Step 4: the interface supports browsing reference data, viewing summarized dashboard metrics, reading query-based reports, and editing \texttt{TradeRecord} rows.
+    \item This design keeps the architecture simple: browser $\rightarrow$ Flask routes $\rightarrow$ PyMySQL queries $\rightarrow$ MySQL database.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Prototype Setup and Secure Connection}
+\begin{columns}[T,onlytextwidth]
+    \column{0.48\textwidth}
+    \scriptsize
+    \textbf{Local startup}
+    \begin{itemize}
+        \item The Flask server is launched from PowerShell inside the project folder.
+        \item The app runs locally at \texttt{http://127.0.0.1:5000}.
+        \item This keeps the demo simple and classroom ready.
+    \end{itemize}
+    \includegraphics[width=\linewidth,height=0.44\textheight,keepaspectratio]{powershell setting.png}
+    \column{0.52\textwidth}
+    \scriptsize
+    \textbf{Database connection}
+    \begin{itemize}
+        \item A settings page lets us configure the real MySQL target without editing code.
+        \item The connection uses the course server, project schema, user credentials, and SSL/TLS because Workbench confirmed secure access.
+        \item This page also helped us debug connection issues step by step during implementation.
+    \end{itemize}
+    \includegraphics[width=\linewidth,height=0.44\textheight,keepaspectratio]{website0.png}
+\end{columns}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Prototype Running Result}
+\begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \scriptsize
+    \textbf{Connection success and dashboard}
+    \begin{itemize}
+        \item After a successful test, the app confirms the database target and SSL status.
+        \item The dashboard immediately shows live counts for companies, stocks, portfolios, and trades.
+        \item This proves the Flask app is reading real data from the database.
+    \end{itemize}
+    \includegraphics[width=\linewidth,height=0.46\textheight,keepaspectratio]{website1.png}
+    \column{0.5\textwidth}
+    \scriptsize
+    \textbf{Data display and reporting}
+    \begin{itemize}
+        \item The dashboard continues with recent trades and a sell-amount-after-tax summary.
+        \item Other pages also support company browsing, trade CRUD, and query-based reports.
+        \item Together, the prototype demonstrates a complete local front-end workflow on top of the project database.
+    \end{itemize}
+    \includegraphics[width=\linewidth,height=0.46\textheight,keepaspectratio]{website2.png}
+\end{columns}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Challenges and Improvements}
+\begin{columns}[T,onlytextwidth]
+    \column{0.5\textwidth}
+    \textbf{Challenges}
+    \begin{itemize}
+        \item Designing a schema that connects market data, strategy rules, and trade records without redundancy
+        \item Implementing FIFO-related logic with SQL subqueries and trade ordering
+        \item Handling exchange-specific tax rules across HK, mainland China, and US markets
+        \item Maintaining consistent key values across all sample records
+    \end{itemize}
+    \column{0.5\textwidth}
+    \textbf{Future Improvements}
+    \begin{itemize}
+        \item Add views for reusable reporting outputs
+        \item Add stored procedures or functions for tax and FIFO calculation
+        \item Extend the Flask prototype with more pages, filters, and form validation
+        \item Add authentication and user-role control if the prototype is expanded beyond a classroom demo
+        \item Extend market data history for richer performance analytics
+    \end{itemize}
+\end{columns}
+\vspace{0.4em}
+\small Current version already includes a working local Flask prototype, but it is still intentionally lightweight and focused on classroom demonstration.
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Conclusion}
+\begin{itemize}
+    \item This database integrates business reference data, market data, strategy rules, and transaction records into one consistent trade-analysis system.
+    \item The project supports meaningful business tasks such as tax calculation, FIFO cost matching, stock screening, and portfolio profit reporting.
+    \item Overall, the system demonstrates how database design and SQL implementation can support practical portfolio trading analysis.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Contribution and AI Usage}
+\small
+\begin{itemize}
+    \item \textbf{Yingqi Tan:} business background, presentation organization, and final review.
+    \item \textbf{Zhesheng Xu:} schema design, ER/logical modeling, and MySQL implementation.
+    \item \textbf{Hao Yang:} SQL query design, result verification, and slide integration.
+    \item \textbf{Shared contribution:} all members discussed the database logic, reviewed the project outputs, and understood the complete workflow.
+    \item \textbf{AI usage statement:} AI tools were used appropriately for debugging, wording refinement, and presentation drafting support; the database design, SQL logic, and final verification were completed and checked by the group.
+\end{itemize}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}
+\centering
+\vspace{2.2cm}
+{\Huge Any Questions?}
+\vspace{0.8cm}
+
+{\large Thank you for listening.}
+\end{frame}
+
+\end{document}

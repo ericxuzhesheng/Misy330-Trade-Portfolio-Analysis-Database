@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.6.1">
+  <diagram name="第 1 页" id="dYSiIFEuKZQotOcXnYAt">
+    <mxGraphModel dx="1345" dy="663" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-12" edge="1" parent="1" source="GVks7OLjgo7fJKNvVvTB-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startSize=10;endSize=10;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;fontFamily=Times New Roman;fontSize=12;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="SgXjCXAlf4EzvoVuVZrg-68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-57" edge="1" parent="1" source="GVks7OLjgo7fJKNvVvTB-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=ERmandOne;endFill=0;endSize=10;startSize=10;startArrow=ERoneToMany;startFill=0;fontFamily=Times New Roman;" target="SgXjCXAlf4EzvoVuVZrg-55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-64" edge="1" parent="1" source="GVks7OLjgo7fJKNvVvTB-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startSize=10;endSize=10;startArrow=ERoneToMany;startFill=0;endArrow=ERmandOne;endFill=0;fontFamily=Times New Roman;" target="SgXjCXAlf4EzvoVuVZrg-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-2" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;startSize=23;" value="Stock" vertex="1">
+          <mxGeometry height="169" width="121.5" x="492.88" y="343" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-15" parent="GVks7OLjgo7fJKNvVvTB-2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;b&gt;&lt;u&gt;StockCode&lt;/u&gt;&lt;/b&gt;&lt;div&gt;TradeCurrency&lt;/div&gt;&lt;div&gt;Type(Growth/Value)&lt;/div&gt;&lt;div&gt;Industry&lt;/div&gt;&lt;div&gt;StockIndex&lt;/div&gt;" vertex="1">
+          <mxGeometry height="124" width="98" x="8" y="28" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-4" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;" value="Factor" vertex="1">
+          <mxGeometry height="104" width="134.5" x="32.25" y="39" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-26" parent="GVks7OLjgo7fJKNvVvTB-4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;b&gt;&lt;u&gt;FactorID&lt;/u&gt;&lt;/b&gt;&lt;div&gt;Name&lt;/div&gt;&lt;div&gt;Type&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Formula&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="58" width="83" x="11" y="33" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-10" edge="1" parent="1" source="SgXjCXAlf4EzvoVuVZrg-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERzeroToMany;startFill=0;endArrow=ERmandOne;endFill=0;startSize=10;endSize=10;fontFamily=Times New Roman;fontSize=12;" target="GVks7OLjgo7fJKNvVvTB-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-20" edge="1" parent="1" source="GVks7OLjgo7fJKNvVvTB-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startSize=10;endSize=10;startArrow=ERmandOne;startFill=0;endArrow=ERzeroToMany;endFill=0;fontFamily=Times New Roman;fontSize=12;" target="SgXjCXAlf4EzvoVuVZrg-68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-5" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;" value="Strategy" vertex="1">
+          <mxGeometry height="118" width="130" x="262" y="206" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-25" parent="GVks7OLjgo7fJKNvVvTB-5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;&lt;u&gt;StrategyID&lt;/u&gt;&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;Nam&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;e&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="78.75" width="98.75" x="11.25" y="31.25" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-70" edge="1" parent="1" source="GVks7OLjgo7fJKNvVvTB-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startSize=10;endSize=10;startArrow=ERmandOne;startFill=0;endArrow=ERoneToMany;endFill=0;fontFamily=Times New Roman;" target="SgXjCXAlf4EzvoVuVZrg-68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-7" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;startSize=23;" value="Portfolio" vertex="1">
+          <mxGeometry height="114" width="132" x="290" y="39" as="geometry" />
+        </mxCell>
+        <mxCell id="GVks7OLjgo7fJKNvVvTB-27" parent="GVks7OLjgo7fJKNvVvTB-7" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;b&gt;&lt;u&gt;PortfolioID&lt;/u&gt;&lt;/b&gt;&lt;div&gt;Name&lt;/div&gt;" vertex="1">
+          <mxGeometry height="66" width="101.13" x="7.87" y="33" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-55" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;" value="Exchange" vertex="1">
+          <mxGeometry height="163" width="107" x="693" y="346" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-56" parent="SgXjCXAlf4EzvoVuVZrg-55" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;font&gt;&lt;b&gt;&lt;u&gt;ExchangeCode&lt;/u&gt;&lt;/b&gt;&lt;/font&gt;&lt;div&gt;Name&lt;/div&gt;&lt;div&gt;Country&lt;/div&gt;&lt;div&gt;OpenTime&lt;/div&gt;&lt;div&gt;EndTime&lt;/div&gt;&lt;div&gt;StampDutyRate&lt;/div&gt;&lt;div&gt;CapitalGainTaxRate&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110.5" width="91" x="4" y="38.5" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-62" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;" value="Company" vertex="1">
+          <mxGeometry height="117.25" width="115.38" x="495.94" y="558" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-63" parent="SgXjCXAlf4EzvoVuVZrg-62" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;b&gt;&lt;u&gt;Name&lt;/u&gt;&lt;/b&gt;&lt;div&gt;Industry&lt;/div&gt;&lt;div&gt;Country&lt;/div&gt;&lt;div&gt;NetProfitGrowth&lt;/div&gt;" vertex="1">
+          <mxGeometry height="76" width="98.12" x="3.88" y="31" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-67" edge="1" parent="1" source="SgXjCXAlf4EzvoVuVZrg-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startSize=10;endSize=10;endArrow=ERmandOne;endFill=0;startArrow=ERoneToMany;startFill=0;fontFamily=Times New Roman;" target="GVks7OLjgo7fJKNvVvTB-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-65" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;" value="MarketData" vertex="1">
+          <mxGeometry height="236.5" width="128" x="264" y="334" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-66" parent="SgXjCXAlf4EzvoVuVZrg-65" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;b&gt;&lt;u&gt;(Date,&amp;nbsp;&lt;/u&gt;&lt;/b&gt;&lt;b&gt;&lt;u&gt;StockCode)&lt;/u&gt;&lt;/b&gt;&lt;div&gt;Open&lt;/div&gt;&lt;div&gt;High&lt;/div&gt;&lt;div&gt;Low&lt;/div&gt;&lt;div&gt;Close&lt;/div&gt;&lt;div&gt;Volume&lt;/div&gt;&lt;div&gt;Turnover&lt;/div&gt;&lt;div&gt;&lt;div&gt;SharesOutstanding&lt;/div&gt;&lt;div&gt;MarketCap&lt;/div&gt;&lt;/div&gt;&lt;div&gt;EPS&lt;/div&gt;&lt;div&gt;Dividend&lt;/div&gt;&lt;div&gt;RSI&lt;/div&gt;&lt;div&gt;MACD&lt;/div&gt;" vertex="1">
+          <mxGeometry height="191" width="102.25" x="9.75" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-68" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;fontSize=12;startSize=23;" value="TradeRecord" vertex="1">
+          <mxGeometry height="142" width="145.25" x="481" y="134" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-69" parent="SgXjCXAlf4EzvoVuVZrg-68" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;fontSize=12;" value="&lt;b&gt;&lt;u&gt;TradeID&lt;/u&gt;&lt;/b&gt;&lt;div&gt;&lt;div&gt;Time&lt;/div&gt;&lt;div&gt;Direction&lt;/div&gt;&lt;div&gt;ExecutionPrice&lt;/div&gt;&lt;div&gt;volume&lt;/div&gt;&lt;div&gt;[StampDuty]&lt;/div&gt;&lt;/div&gt;&lt;div&gt;[CapitalGainTax&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="96" width="120" x="6" y="31" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-80" edge="1" parent="1" source="SgXjCXAlf4EzvoVuVZrg-78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=ERoneToMany;startFill=0;fontFamily=Times New Roman;startSize=10;endSize=10;endArrow=ERmandOne;endFill=0;" target="GVks7OLjgo7fJKNvVvTB-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-78" parent="1" style="swimlane;whiteSpace=wrap;html=1;fontFamily=Times New Roman;startSize=23;" value="FactorUsageRule" vertex="1">
+          <mxGeometry height="143" width="136" x="32" y="193.5" as="geometry" />
+        </mxCell>
+        <mxCell id="SgXjCXAlf4EzvoVuVZrg-79" parent="SgXjCXAlf4EzvoVuVZrg-78" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontFamily=Times New Roman;" value="&lt;div style=&quot;&quot;&gt;&lt;b&gt;&lt;u&gt;RuleID&lt;/u&gt;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;div style=&quot;&quot;&gt;Signal&lt;/div&gt;&lt;div&gt;Operator&lt;/div&gt;&lt;div&gt;Value&lt;/div&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="76.5" width="132" x="9" y="37.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

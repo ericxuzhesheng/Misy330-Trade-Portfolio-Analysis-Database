@@ -1,0 +1,62 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\setlist[itemize]{leftmargin=1.4em}
+
+\title{MISY330 Final Project Speaking Script\\Trade and Portfolio Analysis Database System}
+\author{Group 173 Yanggao}
+\date{Spring 2026}
+
+\begin{document}
+\maketitle
+
+\textbf{Target length:} about 8 to 9 minutes, leaving time for transitions and a 2-minute Q\&A.
+
+\section*{Opening: 30 seconds}
+Good afternoon everyone. We are Group 173 Yanggao, and our project is called \textit{Trade and Portfolio Analysis Database System}. Our group members are Yingqi Tan, Zhesheng Xu, and Hao Yang. In this presentation, we will explain the business background, the database design, the main query logic, and our bonus prototype connected to MySQL.
+
+\section*{Business Overview: 40 seconds}
+The business idea of our project is to support stock trading analysis across different markets and portfolios. In this system, we store company information, exchange tax rules, stock and market data, investment strategies, factor rules, and actual trade records. We need a database because these business activities are highly related. For example, one trade depends on the stock, the exchange, the portfolio, and sometimes the strategy and factor rules behind it. With a database, the business can keep data consistent and produce reports such as tax calculation, FIFO-based realized profit, and stock screening results.
+
+\section*{Database Scope and System Logic: 1 minute}
+Our database is organized in layers. First, the reference layer includes Company, Exchange, and Stock. These tables define what is being traded and where it is traded. Second, the market layer stores daily market data such as close price, EPS, dividend, RSI, and MACD. Third, the decision layer includes Strategy, Factor, and FactorUsageRule. This layer models how screening factors support buy and sell decisions. Fourth, the transaction layer includes Portfolio and TradeRecord, which store actual executed trades. Finally, the analysis layer uses SQL to connect all these tables and produce tax, profit, and screening outputs. This layered design makes the system easier to understand and explains why our queries can answer business questions directly.
+
+\section*{ER Diagram and Logical Model: 1 minute}
+On the ER diagram slide, we show the main entities and their relationships. The key point is that TradeRecord is the central transaction table. Each trade belongs to one portfolio, one stock, and one strategy. Stock connects upward to both Company and Exchange, and MarketData connects to Stock through time-series observations. In the logical model, one important implementation detail is FactorUsageRule, which resolves the many-to-many relationship between Strategy and Factor. Another detail is that MarketData uses a composite key based on date and stock code. These choices let us keep the design normalized while still supporting realistic analysis.
+
+\section*{Database Implementation: 40 seconds}
+For implementation, we used MySQL Workbench, and our script GroupProject.sql creates the full schema, primary keys, foreign keys, and sample data. The overall process is simple: create the database, create the parent tables first, load lookup data, then load dependent tables such as MarketData and TradeRecord. Because the foreign-key links are consistent, later update queries and reporting queries can run on the same dataset without manual cleanup.
+
+\section*{Queries 1 and 2: 1 minute 20 seconds}
+Our first query checks FIFO cost basis. The purpose is to match each sell trade to the earliest eligible buy trade in the same portfolio and stock. This is important because realized profit and capital gain tax depend on the correct historical cost. The result confirms that our matching logic works, and it also shows one case where no prior buy exists.
+
+Our second query updates taxes based on exchange rules. Different exchanges use different tax logic. For example, Hong Kong applies stamp duty, while U.S. profitable sell trades may trigger capital gain tax. This query is important because all later reporting depends on correct tax fields in TradeRecord.
+
+\section*{Queries 3 and 4: 1 minute 10 seconds}
+The third query summarizes total realized profit and loss by portfolio and currency. This is a management-style report. It quickly shows which portfolio generated realized performance after tax.
+
+The fourth query goes one level deeper. Instead of only showing the summary, it shows transaction-level realized profit inside a portfolio. This is useful for audit and explanation, because managers can trace the portfolio result back to individual sell trades, including gains, losses, and break-even exits.
+
+\section*{Queries 5 and 6: 1 minute 10 seconds}
+The fifth query is a screening query. It joins company, stock, exchange, and market data to find companies with negative profit growth and calculate PE ratio. This helps identify weak-growth companies and compare valuation across markets.
+
+The sixth query uses GROUP BY and HAVING to find portfolios with repeated sell activity in the same currency. This helps identify active accounts and summarize tax-adjusted sale proceeds. Together, these six queries show that our project supports both operational analysis and management reporting.
+
+\section*{Technical Highlights: 40 seconds}
+Technically, the most important points are the PK and FK design, the multi-table joins, the nested query logic, and the business meaning of the outputs. Our project is not just storing records. It models actual trade-analysis logic such as exchange-specific taxes, FIFO cost basis, realized profit, and valuation screening. That is the reason our SQL is meaningful from a business perspective.
+
+\section*{Bonus Prototype: 1 minute 20 seconds}
+For the bonus part, we built a simple local Flask prototype connected to the MySQL database. The backend uses Flask and PyMySQL. The frontend provides a small dashboard, company browsing, trade browsing, report pages, and a connection settings page. The user first starts the Flask app locally in PowerShell, then opens the settings page, enters the MySQL host, user, password, database name, and SSL option, and tests the connection. After the connection succeeds, the web pages can read the real project database and display the live data. This prototype shows that our database is not only designed and queried, but can also support a simple application layer.
+
+\section*{Challenges, Conclusion, and Closing: 50 seconds}
+One challenge was designing the schema so that market data, strategy rules, and trade records connect correctly without redundancy. Another challenge was implementing FIFO and exchange-specific tax logic in SQL. In the future, this project could be improved with views, stored procedures, and a more complete front end.
+
+In conclusion, our database supports the full process from data storage to trade analysis. It combines reference data, market data, strategy logic, and trade records into one system, and it produces meaningful outputs such as taxes, realized profit, and screening reports. Thank you for listening, and we welcome any questions.
+
+\end{document}
