@@ -1,6 +1,15 @@
-# MISY330 Trade Portfolio Analysis Database
+<h1 align="center">MISY330 Trade Portfolio Analysis Database</h1>
 
-简体中文 | [English](#english)
+<p align="center"><strong>Trade Portfolio Analysis Database | 交易与投资组合分析数据库</strong></p>
+
+<p align="center">
+  <a href="#zh-cn">
+    <img alt="Chinese" src="https://img.shields.io/badge/LANGUAGE-%E4%B8%AD%E6%96%87-E74C3C?style=for-the-badge&logo=googletranslate&logoColor=white">
+  </a>
+  <a href="#english">
+    <img alt="English" src="https://img.shields.io/badge/LANGUAGE-ENGLISH-2F80ED?style=for-the-badge&logo=googletranslate&logoColor=white">
+  </a>
+</p>
 
 ---
 
@@ -8,7 +17,9 @@
 
 ## 简体中文
 
-简体中文 | [English](#english)
+<p>
+  <strong>当前语言：</strong>中文 | <a href="#english">Switch to English</a>
+</p>
 
 ### 项目简介
 
@@ -162,7 +173,9 @@ http://127.0.0.1:5000/settings
 
 ## English
 
-[简体中文](#zh-cn) | English
+<p>
+  <strong>Current Language:</strong> English | <a href="#zh-cn">切换到中文</a>
+</p>
 
 ### Project Overview
 
