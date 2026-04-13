@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Connection Settings{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h2>Connection Settings</h2>
+    <p class="muted">Use this page to connect the prototype to your actual MySQL database without editing code.</p>
+
+    <form method="post" class="grid">
+        <div>
+            <label for="host">Host</label>
+            <input id="host" name="host" type="text" value="{{ current.host }}" required>
+        </div>
+
+        <div>
+            <label for="port">Port</label>
+            <input id="port" name="port" type="number" value="{{ current.port }}" required>
+        </div>
+
+        <div>
+            <label for="user">User</label>
+            <input id="user" name="user" type="text" value="{{ current.user }}" required>
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" value="{{ current.password }}">
+            <label class="checkbox-row">
+                <input id="show_password" type="checkbox" onclick="document.getElementById('password').type = this.checked ? 'text' : 'password'">
+                Show password while checking input
+            </label>
+        </div>
+
+        <div>
+            <label for="database">Database</label>
+            <input id="database" name="database" type="text" value="{{ current.database }}" required>
+        </div>
+
+        <div>
+            <label for="ssl_enabled">Connection Security</label>
+            <label class="checkbox-row">
+                <input id="ssl_enabled" name="ssl_enabled" type="checkbox" {% if current.ssl_enabled %}checked{% endif %}>
+                Use SSL/TLS for this MySQL connection
+            </label>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" type="submit">Save and Test Connection</button>
+            <a class="btn btn-secondary" href="{{ url_for('dashboard') }}">Back</a>
+        </div>
+    </form>
+
+    <p class="muted">
+        Tip: your SQL dump references host <code>128.175.241.51</code> and database <code>student-z126_Trade</code>,
+        but you should use your own valid MySQL account credentials.
+    </p>
+    <p class="muted">
+        If MySQL Workbench says SSL is enabled for the same server, keep this checkbox turned on here as well.
+    </p>
+    <p class="muted">
+        Type the password exactly as stored in Workbench and do not include surrounding quotation marks.
+    </p>
+</section>
+{% endblock %}

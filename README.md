@@ -28,6 +28,56 @@
 
 本项目不仅包含完整的数据库设计与 SQL 实现，还额外完成了一个本地可运行的 **Flask + MySQL bonus prototype**，用于演示数据库如何被简单网页应用调用。
 
+### 项目截图
+
+#### 数据模型
+
+![ER Diagram](graph/ER%20Diagram.png)
+
+![Trade Logical Model](graph/Trade%20ER%20Model.png)
+
+#### 查询结果示例
+
+![Query 1](graph/query%201.png)
+
+![Query 6](graph/query%206.png)
+
+#### Web Prototype 页面示例
+
+![Website Dashboard](graph/website0.png)
+
+![Website Trades](graph/website1.png)
+
+![Website Reports](graph/website2.png)
+
+### 仓库结构说明
+
+```text
+Misy330-Trade-Portfolio-Analysis-Database/
+|-- app.py
+|-- GroupProject.sql
+|-- TradeQuery.sql
+|-- README.md
+|-- MISY330_Final_Project_Presentation.tex
+|-- MISY330_Final_Project_Speaking_Script.tex
+|-- graph/
+|   |-- ER Diagram.png
+|   |-- Trade ER Model.png
+|   |-- query 1.png ... query 6.png
+|   |-- website0.png ... website2.png
+|   `-- powershell setting.png
+|-- templates/
+|   |-- base.html
+|   |-- dashboard.html
+|   |-- companies.html
+|   |-- trades.html
+|   |-- trade_form.html
+|   |-- reports.html
+|   `-- settings.html
+`-- static/
+  `-- style.css
+```
+
 ### 项目目标
 
 本项目希望解决以下业务需求：
@@ -112,9 +162,11 @@
 - `MISY330_Final_Project_Speaking_Script.pdf`：英文讲稿 PDF
 - `GroupProject.sql`：数据库创建与样例数据脚本
 - `TradeQuery.sql`：业务查询脚本
-- `ER Diagram.png`：ER 图
-- `Trade ER Model.png`：逻辑数据模型图
-- `query 1.png` 到 `query 6.png`：查询结果截图
+- `graph/ER Diagram.png`：ER 图
+- `graph/Trade ER Model.png`：逻辑数据模型图
+- `graph/query 1.png` 到 `graph/query 6.png`：查询结果截图
+- `graph/website0.png` 到 `graph/website2.png`：Web 原型截图
+- `graph/powershell setting.png`：数据库连接配置示例截图
 - `app.py`：Flask bonus prototype 主程序
 - `templates/`：网页模板
 - `static/`：网页样式文件
@@ -183,6 +235,56 @@ This repository contains a final database project for `MISY330 Database Design a
 The project is a **Trade and Portfolio Analysis Database System** designed to support stock trading records, market data analysis, tax calculation, factor-based screening, strategy modeling, and portfolio performance analysis.
 
 In addition to the database design and SQL implementation, this project also includes a **local Flask + MySQL bonus prototype** that demonstrates how the database can be used through a simple web application.
+
+### Project Screenshots
+
+#### Data Models
+
+![ER Diagram](graph/ER%20Diagram.png)
+
+![Trade Logical Model](graph/Trade%20ER%20Model.png)
+
+#### Query Result Samples
+
+![Query 1](graph/query%201.png)
+
+![Query 6](graph/query%206.png)
+
+#### Web Prototype Pages
+
+![Website Dashboard](graph/website0.png)
+
+![Website Trades](graph/website1.png)
+
+![Website Reports](graph/website2.png)
+
+### Repository Structure
+
+```text
+Misy330-Trade-Portfolio-Analysis-Database/
+|-- app.py
+|-- GroupProject.sql
+|-- TradeQuery.sql
+|-- README.md
+|-- MISY330_Final_Project_Presentation.tex
+|-- MISY330_Final_Project_Speaking_Script.tex
+|-- graph/
+|   |-- ER Diagram.png
+|   |-- Trade ER Model.png
+|   |-- query 1.png ... query 6.png
+|   |-- website0.png ... website2.png
+|   `-- powershell setting.png
+|-- templates/
+|   |-- base.html
+|   |-- dashboard.html
+|   |-- companies.html
+|   |-- trades.html
+|   |-- trade_form.html
+|   |-- reports.html
+|   `-- settings.html
+`-- static/
+  `-- style.css
+```
 
 ### Project Objectives
 
@@ -267,9 +369,11 @@ This bonus prototype shows that the project is not only a SQL assignment, but al
 - `MISY330_Final_Project_Speaking_Script.pdf`: English speaking script PDF
 - `GroupProject.sql`: schema creation and sample data
 - `TradeQuery.sql`: business query script
-- `ER Diagram.png`: ER diagram
-- `Trade ER Model.png`: logical data model image
-- `query 1.png` to `query 6.png`: query result screenshots
+- `graph/ER Diagram.png`: ER diagram
+- `graph/Trade ER Model.png`: logical data model image
+- `graph/query 1.png` to `graph/query 6.png`: query result screenshots
+- `graph/website0.png` to `graph/website2.png`: web prototype screenshots
+- `graph/powershell setting.png`: database connection setting screenshot
 - `app.py`: Flask bonus prototype entry point
 - `templates/`: HTML templates
 - `static/`: CSS assets

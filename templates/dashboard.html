@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h2>Overview</h2>
+    <p class="muted">This page gives a quick local demo of the main database contents.</p>
+    {% if error %}
+        <div class="error-box">{{ error }}</div>
+        <p class="muted">
+            The app is running, but it is not connected to MySQL yet.
+            <a href="{{ url_for('settings') }}">Open Connection Settings</a> to enter your database credentials and test the connection.
+        </p>
+    {% else %}
+        <div class="cards">
+            <div class="card">
+                <div class="label">Companies</div>
+                <div class="value">{{ counts.companies }}</div>
+            </div>
+            <div class="card">
+                <div class="label">Stocks</div>
+                <div class="value">{{ counts.stocks }}</div>
+            </div>
+            <div class="card">
+                <div class="label">Portfolios</div>
+                <div class="value">{{ counts.portfolios }}</div>
+            </div>
+            <div class="card">
+                <div class="label">Trades</div>
+                <div class="value">{{ counts.trades }}</div>
+            </div>
+        </div>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h3>Recent Trades</h3>
+    {% if latest_trades %}
+        <table>
+            <thead>
+                <tr>
+                    <th>TradeID</th>
+                    <th>Time</th>
+                    <th>Portfolio</th>
+                    <th>Stock</th>
+                    <th>Direction</th>
+                    <th>Price</th>
+                    <th>Volume</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in latest_trades %}
+                <tr>
+                    <td>{{ row.TradeID }}</td>
+                    <td>{{ row.Time }}</td>
+                    <td>{{ row.PortfolioName }}</td>
+                    <td>{{ row.StockCode }}</td>
+                    <td>{{ row.Direction }}</td>
+                    <td>{{ row.ExecutionPrice }}</td>
+                    <td>{{ row.Volume }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif not error %}
+        <p class="muted">No trade data found.</p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h3>Sell Amount After Tax</h3>
+    {% if pnl_rows %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Portfolio</th>
+                    <th>Currency</th>
+                    <th>Sell Amount After Tax</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in pnl_rows %}
+                <tr>
+                    <td>{{ row.PortfolioName }}</td>
+                    <td>{{ row.Currency }}</td>
+                    <td>{{ row.SellAmountAfterTax }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif not error %}
+        <p class="muted">No report rows found.</p>
+    {% endif %}
+</section>
+{% endblock %}

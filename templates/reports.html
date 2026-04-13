@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h2>Business Reports</h2>
+    <p class="muted">These pages translate the SQL logic from the course project into simple browsable outputs.</p>
+    {% if error %}
+        <div class="error-box">{{ error }}</div>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h3>Negative-Growth Companies with PE Ratio</h3>
+    {% if negative_growth_rows %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Stock</th>
+                    <th>Currency</th>
+                    <th>Exchange</th>
+                    <th>Growth Rate</th>
+                    <th>PE Ratio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in negative_growth_rows %}
+                <tr>
+                    <td>{{ row.CompanyName }}</td>
+                    <td>{{ row.StockCode }}</td>
+                    <td>{{ row.Currency }}</td>
+                    <td>{{ row.ExchangeName }}</td>
+                    <td>{{ row.GrowthRate }}</td>
+                    <td>{{ row.PERatio }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif not error %}
+        <p class="muted">No rows returned.</p>
+    {% endif %}
+</section>
+
+<section class="panel">
+    <h3>Portfolios with Repeated Sell Activity</h3>
+    {% if sell_activity_rows %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Portfolio ID</th>
+                    <th>Portfolio</th>
+                    <th>Currency</th>
+                    <th>Sell Trades</th>
+                    <th>Total Sell Amount After Tax</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in sell_activity_rows %}
+                <tr>
+                    <td>{{ row.PortfolioID }}</td>
+                    <td>{{ row.PortfolioName }}</td>
+                    <td>{{ row.TradeCurrency }}</td>
+                    <td>{{ row.NumSellTrades }}</td>
+                    <td>{{ row.TotalSellAmountAfterTax }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif not error %}
+        <p class="muted">No rows returned.</p>
+    {% endif %}
+</section>
+{% endblock %}

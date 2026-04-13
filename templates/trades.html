@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Trades{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <div class="toolbar">
+        <div>
+            <h2>TradeRecord CRUD</h2>
+            <p class="muted">Browse and manage trade records directly in the project database.</p>
+        </div>
+        <a class="btn btn-primary" href="{{ url_for('trade_create') }}">Add Trade</a>
+    </div>
+
+    <form method="get" class="toolbar">
+        <div>
+            <label for="portfolio">Filter by portfolio</label>
+            <select name="portfolio" id="portfolio" onchange="this.form.submit()">
+                <option value="">All portfolios</option>
+                {% for portfolio in portfolios %}
+                <option value="{{ portfolio.PortfolioID }}" {% if selected_portfolio == portfolio.PortfolioID %}selected{% endif %}>
+                    {{ portfolio.Name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+    </form>
+
+    {% if error %}
+        <div class="error-box">{{ error }}</div>
+    {% elif rows %}
+        <table>
+            <thead>
+                <tr>
+                    <th>TradeID</th>
+                    <th>Time</th>
+                    <th>Portfolio</th>
+                    <th>Stock</th>
+                    <th>Company</th>
+                    <th>Strategy</th>
+                    <th>Direction</th>
+                    <th>Price</th>
+                    <th>Volume</th>
+                    <th>Taxes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.TradeID }}</td>
+                    <td>{{ row.Time }}</td>
+                    <td>{{ row.PortfolioName }}</td>
+                    <td>{{ row.StockCode }}</td>
+                    <td>{{ row.CompanyName }}</td>
+                    <td>{{ row.StrategyName }}</td>
+                    <td>{{ row.Direction }}</td>
+                    <td>{{ row.ExecutionPrice }}</td>
+                    <td>{{ row.Volume }}</td>
+                    <td>Stamp: {{ row.StampDuty }}<br>CGT: {{ row.CapitalGainTax }}</td>
+                    <td>
+                        <div class="actions">
+                            <a class="btn btn-secondary" href="{{ url_for('trade_edit', trade_id=row.TradeID) }}">Edit</a>
+                            <form method="post" action="{{ url_for('trade_delete', trade_id=row.TradeID) }}" onsubmit="return confirm('Delete this trade?');">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="muted">No trades found.</p>
+    {% endif %}
+</section>
+{% endblock %}

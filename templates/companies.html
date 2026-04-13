@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Companies{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h2>Company Browser</h2>
+    <p class="muted">Browse issuer-level information and how many listed tickers each company has in the database.</p>
+    {% if error %}
+        <div class="error-box">{{ error }}</div>
+    {% elif rows %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Industry</th>
+                    <th>Country</th>
+                    <th>Net Profit Growth</th>
+                    <th>Listed Tickers</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.Name }}</td>
+                    <td>{{ row.Industry }}</td>
+                    <td>{{ row.Country }}</td>
+                    <td>{{ row.NetProfitGrowth }}</td>
+                    <td>{{ row.ListedTickers }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="muted">No company data found.</p>
+    {% endif %}
+</section>
+{% endblock %}

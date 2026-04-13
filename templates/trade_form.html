@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}{{ mode }} Trade{% endblock %}
+
+{% block content %}
+<section class="panel">
+    <h2>{{ mode }} Trade</h2>
+    <p class="muted">This form writes directly to the <code>TradeRecord</code> table.</p>
+
+    <form method="post" class="grid">
+        <div>
+            <label for="time">Time</label>
+            <input id="time" name="time" type="datetime-local"
+                   value="{% if trade and trade.Time %}{{ trade.Time.strftime('%Y-%m-%dT%H:%M') }}{% endif %}" required>
+        </div>
+
+        <div>
+            <label for="direction">Direction</label>
+            <select id="direction" name="direction" required>
+                {% for value in ['Buy', 'Sell'] %}
+                <option value="{{ value }}" {% if trade and trade.Direction == value %}selected{% endif %}>{{ value }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="execution_price">Execution Price</label>
+            <input id="execution_price" name="execution_price" type="number" step="0.0001"
+                   value="{{ trade.ExecutionPrice if trade else '' }}" required>
+        </div>
+
+        <div>
+            <label for="volume">Volume</label>
+            <input id="volume" name="volume" type="number" value="{{ trade.Volume if trade else '' }}" required>
+        </div>
+
+        <div>
+            <label for="stamp_duty">Stamp Duty</label>
+            <input id="stamp_duty" name="stamp_duty" type="number" step="0.0001"
+                   value="{{ trade.StampDuty if trade else '0' }}">
+        </div>
+
+        <div>
+            <label for="capital_gain_tax">Capital Gain Tax</label>
+            <input id="capital_gain_tax" name="capital_gain_tax" type="number" step="0.0001"
+                   value="{{ trade.CapitalGainTax if trade else '0' }}">
+        </div>
+
+        <div>
+            <label for="portfolio_id">Portfolio</label>
+            <select id="portfolio_id" name="portfolio_id" required>
+                {% for portfolio in portfolios %}
+                <option value="{{ portfolio.PortfolioID }}"
+                    {% if trade and trade.Portfolio_PortfolioID == portfolio.PortfolioID %}selected{% endif %}>
+                    {{ portfolio.Name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="strategy_id">Strategy</label>
+            <select id="strategy_id" name="strategy_id" required>
+                {% for strategy in strategies %}
+                <option value="{{ strategy.StrategyID }}"
+                    {% if trade and trade.Strategy_StrategyID == strategy.StrategyID %}selected{% endif %}>
+                    {{ strategy.Name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label for="stock_code">Stock</label>
+            <select id="stock_code" name="stock_code" required>
+                {% for stock in stocks %}
+                <option value="{{ stock.Code }}"
+                    {% if trade and trade.Stock_Code == stock.Code %}selected{% endif %}>
+                    {{ stock.Code }} - {{ stock.CompanyName }} ({{ stock.TradeCurrency }})
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" type="submit">{{ mode }} Trade</button>
+            <a class="btn btn-secondary" href="{{ url_for('trades') }}">Cancel</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

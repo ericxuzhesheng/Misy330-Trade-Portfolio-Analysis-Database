@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Trade Database Demo{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <h1>Trade Database Demo</h1>
+            <p>MISY330 bonus prototype for the trade and portfolio project</p>
+        </div>
+        <nav class="nav">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('companies') }}">Companies</a>
+            <a href="{{ url_for('trades') }}">Trades</a>
+            <a href="{{ url_for('reports') }}">Reports</a>
+            <a href="{{ url_for('settings') }}">Connection Settings</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="panel">
+            <div class="db-label">Current database target: <strong>{{ db_name }}</strong> on <strong>{{ db_host }}</strong></div>
+            <div class="muted">Current user: {{ db_user }}. This banner shows the saved connection target, not a successful live connection test.</div>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
