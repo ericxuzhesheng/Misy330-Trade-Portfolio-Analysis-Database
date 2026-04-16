@@ -12,6 +12,9 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{array}
+\usepackage{listings}
+
+\graphicspath{{graph/}}
 
 \title[Trade and Portfolio Analysis]{Trade and Portfolio Analysis Database System}
 \subtitle{Database Design, Implementation, and Trade Analytics}
@@ -48,6 +51,35 @@
     \begin{beamercolorbox}[rounded=true,sep=0.45em,wd=\linewidth]{block body}
     \textbf{Algorithm:} {\ttfamily\tiny #1}
     \end{beamercolorbox}
+}
+
+\lstdefinestyle{sqlstyle}{
+    language=SQL,
+    basicstyle=\ttfamily\fontsize{4.2}{4.6}\selectfont,
+    keywordstyle=\color{blue!60!black},
+    commentstyle=\color{green!35!black},
+    stringstyle=\color{orange!70!black},
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=false,
+    columns=fullflexible,
+    keepspaces=true,
+    frame=single,
+    rulecolor=\color{black!25},
+    aboveskip=0pt,
+    belowskip=0pt,
+    xleftmargin=0.2em,
+    xrightmargin=0.2em
+}
+
+\newcommand{\sqlcode}[2]{%
+    \vspace{-0.35em}
+    \lstinputlisting[style=sqlstyle,firstline=#1,lastline=#2]{TradeQuery.sql}
+}
+
+\newcommand{\sqlfilecode}[3]{%
+    \vspace{-0.35em}
+    \lstinputlisting[style=sqlstyle,firstline=#2,lastline=#3]{#1}
 }
 
 \begin{document}
@@ -114,7 +146,7 @@
     \end{itemize}
     \column{0.62\textwidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.70\textheight,keepaspectratio]{ER Diagram.png}
+    \includegraphics[width=\linewidth,height=0.70\textheight,keepaspectratio]{Trade ER Model.png}
 \end{columns}
 \end{frame}
 
@@ -131,7 +163,7 @@
     \end{itemize}
     \column{0.62\textwidth}
     \centering
-    \includegraphics[width=\linewidth,height=0.74\textheight,keepaspectratio]{Trade ER Model.png}
+    \includegraphics[width=\linewidth,height=0.74\textheight,keepaspectratio]{ER Diagram.png}
 \end{columns}
 \end{frame}
 
@@ -155,86 +187,107 @@
 \end{frame}
 
 % ------------------------------------------------
-\begin{frame}{Query 1: FIFO Cost Basis Check}
+\begin{frame}[fragile]{Query 1 SQL: FIFO Cost Basis Check}
+\sqlcode{34}{79}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 1 Result: FIFO Cost Basis Check}
 \scriptsize
 \begin{itemize}
-    \item \textbf{Idea:} match each sell trade to the earliest eligible buy in the same stock and portfolio.
-    \item \textbf{Meaning:} FIFO cost basis is required for realized profit and capital gain tax.
-    \item \textbf{Output:} NVDA sells match expected buy prices, while trade 20 has no prior buy match.
+    \item FIFO matches each sell trade to the earliest eligible buy in the same stock and portfolio.
+    \item NVDA sells match the expected buy prices, while trade 20 has no prior buy match.
 \end{itemize}
-\algobox{Filter sell trades\\
-Find earlier buy trades in same portfolio and stock\\
-Return matched FIFO buy price for validation}
 \largequeryimage{query 1.png}
 \end{frame}
 
 % ------------------------------------------------
-\begin{frame}{Query 2: Updated Tax Results by Exchange}
+\begin{frame}[fragile]{Query 2 SQL (Part 1): Stamp Duty Update}
+\sqlcode{9}{25}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}[fragile]{Query 2 SQL (Part 2): Capital Gain Tax Update}
+\sqlcode{87}{132}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}[fragile]{Query 2 SQL (Part 3): Tax Result Check}
+\sqlcode{140}{152}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 2 Result: Updated Tax Results by Exchange}
 \scriptsize
 \begin{itemize}
-    \item \textbf{Idea:} update taxes by linking each trade to exchange-specific rules.
-    \item \textbf{Meaning:} profit reports are only reliable after the correct market tax logic is applied.
-    \item \textbf{Output:} HKEX shows stamp duty, while NVDA and COST show capital gain tax on profitable US sells.
+    \item Tax fields are updated by joining each trade to the exchange-specific stamp duty and capital gain tax rules.
+    \item HKEX trades show stamp duty, while profitable US sells such as NVDA and COST show capital gain tax.
 \end{itemize}
-\algobox{Join TradeRecord + Stock + Exchange\\
-Apply stamp duty rule by market and direction\\
-Apply capital gain tax when realized gain > 0}
 \largequeryimage{query 2.png}
 \end{frame}
 
 % ------------------------------------------------
-\begin{frame}{Query 3: Total Realized P\&L by Portfolio and Currency}
+\begin{frame}[fragile]{Query 3 SQL: Total Realized P\&L by Portfolio and Currency}
+\sqlcode{160}{204}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 3 Result: Total Realized P\&L by Portfolio and Currency}
 \scriptsize
 \begin{itemize}
-    \item \textbf{Idea:} aggregate realized profit for sell trades after tax.
-    \item \textbf{Meaning:} management needs a quick portfolio-level performance summary by currency.
-    \item \textbf{Output:} \texttt{Main\_Aggressive} shows total realized P\&L of 2067.75 in USD.
+    \item The query aggregates realized profit for sell trades after stamp duty and capital gain tax.
+    \item \texttt{Main\_Aggressive} shows total realized P\&L of 2067.75 in USD.
 \end{itemize}
-\algobox{Use sell trades only\\
-Compute net realized profit after tax\\
-Group by portfolio and trade currency}
 \mediumwidequeryimage{query 3.png}
 \end{frame}
 
 % ------------------------------------------------
-\begin{frame}{Query 4: Transaction-Level Realized Profit Detail}
+\begin{frame}[fragile]{Query 4 SQL (Part 1): Transaction-Level Realized Profit Detail}
+\sqlcode{212}{253}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}[fragile]{Query 4 SQL (Part 2): Transaction-Level Realized Profit Detail}
+\sqlcode{254}{297}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 4 Result: Transaction-Level Realized Profit Detail}
 \scriptsize
 \begin{itemize}
-    \item \textbf{Idea:} show realized profit for each sell trade inside one portfolio.
-    \item \textbf{Meaning:} managers need trade-level audit detail behind the summary report.
-    \item \textbf{Output:} the portfolio contains one NVDA gain, one AAPL loss, and one break-even NVDA exit.
+    \item The detail query shows each sell transaction together with its FIFO buy match and tax deductions.
+    \item Portfolio 1 contains one NVDA gain, one AAPL loss, and one break-even NVDA exit.
 \end{itemize}
-\algobox{Select one portfolio\\
-Match sell price with FIFO buy price and taxes\\
-Return net realized profit by transaction}
 \widequeryimage{query 4.png}
 \end{frame}
 
 % ------------------------------------------------
-\begin{frame}{Query 5: Negative-Growth Companies with PE Ratio}
+\begin{frame}[fragile]{Query 5 SQL: Negative-Growth Companies with PE Ratio}
+\sqlcode{305}{323}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 5 Result: Negative-Growth Companies with PE Ratio}
 \scriptsize
 \begin{itemize}
-    \item \textbf{Idea:} screen stocks whose companies have negative profit growth and compute PE ratio.
-    \item \textbf{Meaning:} this helps identify weak-growth firms and compare valuation across markets.
-    \item \textbf{Output:} the result includes Chagee, BYD, JPMorgan Chase, and China Mobile.
+    \item The screening query joins company, stock, exchange, and market data, then filters for negative profit growth.
+    \item The output includes Chagee, BYD, JPMorgan Chase, and China Mobile with computed PE ratios.
 \end{itemize}
-\algobox{Join Company + Stock + Exchange + MarketData\\
-Keep rows with negative profit growth\\
-Calculate PE ratio from close price and EPS}
 \widequeryimage{query 5.png}
 \end{frame}
 
 % ------------------------------------------------
-\begin{frame}{Query 6: Portfolios with Repeated Sell Activity}
+\begin{frame}[fragile]{Query 6 SQL: Portfolios with Repeated Sell Activity}
+\sqlcode{328}{339}
+\end{frame}
+
+% ------------------------------------------------
+\begin{frame}{Query 6 Result: Portfolios with Repeated Sell Activity}
 \scriptsize
 \begin{itemize}
-    \item \textbf{Idea:} find portfolios with at least two sell trades in the same currency.
-    \item \textbf{Meaning:} this identifies active accounts and summarizes tax-adjusted sale proceeds.
-    \item \textbf{Output:} three portfolio-currency groups qualify, including \texttt{Main\_Aggressive} in USD.
+    \item The query groups sell trades by portfolio and currency, then keeps only groups with at least two sells.
+    \item Three portfolio-currency groups qualify, including \texttt{Main\_Aggressive} in USD.
 \end{itemize}
-\algobox{Use sell trades only\\
-Group by portfolio and currency\\
-Keep groups with COUNT(*) >= 2}
 \widequeryimage{query 6.png}
 \end{frame}
 

@@ -32,9 +32,9 @@
 
 #### 数据模型
 
-![ER Diagram](graph/ER%20Diagram.png)
+![ER Diagram](graph/Trade%20ER%20Model.png)
 
-![Trade Logical Model](graph/Trade%20ER%20Model.png)
+![Logical Data Model](graph/ER%20Diagram.png)
 
 #### 查询结果示例
 
@@ -240,9 +240,9 @@ In addition to the database design and SQL implementation, this project also inc
 
 #### Data Models
 
-![ER Diagram](graph/ER%20Diagram.png)
+![ER Diagram](graph/Trade%20ER%20Model.png)
 
-![Trade Logical Model](graph/Trade%20ER%20Model.png)
+![Logical Data Model](graph/ER%20Diagram.png)
 
 #### Query Result Samples
 
@@ -330,6 +330,8 @@ The main SQL files are:
 - `TradeQuery.sql`  
   Contains the business queries and update logic used in the project
 
+The presentation deck now embeds the full SQL text from `TradeQuery.sql` on dedicated Beamer code slides, followed by the corresponding query-result screenshots.
+
 The SQL logic covers:
 
 - multi-table joins
@@ -363,28 +365,29 @@ This bonus prototype shows that the project is not only a SQL assignment, but al
 
 ### Project Files
 
-- `MISY330_Final_Project_Presentation.tex`: final Beamer slide source
+- `MISY330_Final_Project_Presentation.tex`: final Beamer slide source with full SQL query listings
 - `MISY330_Final_Project_Presentation.pdf`: final presentation PDF
 - `MISY330_Final_Project_Speaking_Script.tex`: English speaking script source
 - `MISY330_Final_Project_Speaking_Script.pdf`: English speaking script PDF
 - `GroupProject.sql`: schema creation and sample data
 - `TradeQuery.sql`: business query script
-- `graph/ER Diagram.png`: ER diagram
-- `graph/Trade ER Model.png`: logical data model image
+- `Trade Logical Model.mwb`: MySQL Workbench logical model source
+- `Trade ER Model.drawio`: ER diagram source
+- `graph/Trade ER Model.png`: ER diagram image
+- `graph/ER Diagram.png`: logical data model image
 - `graph/query 1.png` to `graph/query 6.png`: query result screenshots
 - `graph/website0.png` to `graph/website2.png`: web prototype screenshots
 - `graph/powershell setting.png`: database connection setting screenshot
 - `app.py`: Flask bonus prototype entry point
 - `templates/`: HTML templates
 - `static/`: CSS assets
-- `requirements.txt`: Python dependencies
 
 ### How to Run the Bonus Prototype
 
 #### 1. Install dependencies
 
 ```powershell
-pip install -r requirements.txt
+pip install Flask PyMySQL
 ```
 
 #### 2. Start the Flask app
